@@ -1,0 +1,92 @@
+{% extends 'All/index.html' %}
+{% block content %}
+
+
+  <main class="profile-page layout layout--3">
+    <div class="container">
+      <!-- Topics Start -->
+      <div class="topics">
+          
+        </div>
+      <!-- Topics End -->
+
+      <!-- Room List Start -->
+      <div class="roomList">
+        <div class="profile">
+          <div class="profile__avatar">
+            <div class="avatar avatar--large active">
+              <img src="{{user.profile.image.url}}" />
+            </div>
+          </div>
+          <div class="profile__info">
+            <h2>{{user.first_name}} {{user.last_name}}</h2>
+            <p>@{{user.username}}</p>
+            {% if request.user == user %}
+            <a href="{% url 'edit_profile' %}" class="btn btn--main btn--pill">Edit Profile</a>
+            {% endif %}
+          </div>
+          <div class="profile__about">
+            <h3>About</h3>
+            <p>
+              {{user.profile.bio}}
+            </p>
+          </div>
+        </div>
+
+        <div class="roomList__header">
+          <div>
+            <h2>Posts Created By @{{user.username}}</a>
+            </h2>
+          </div>
+        </div>
+
+        {% for post in posts %}
+          <div class="roomListRoom">
+            <div class="roomListRoom__header">
+              <a href="{% url 'profile' post.user.id %}" class="roomListRoom__author">
+                <div class="avatar avatar--small">
+                  <img src="{{user.profile.image.url}}" />
+                </div>
+                <span>@{{user.username}}</span>
+              </a>
+              
+            </div>
+            <div class="roomListRoom__content">
+              {% if post.image %}
+              <img src="{{post.image.url}}" />
+              {% endif %}
+              <p>
+                {{post.body}}
+              </p>
+            </div>
+            <div class="roomListRoom__meta">
+              <a href="room.html" class="roomListRoom__joined">
+                {{post.created | timesince }}
+              </a>
+              
+            </div>
+          </div>
+          {% endfor %}
+  
+      </div>
+      <!-- Room List End -->
+
+      <!-- Activities Start -->
+      <div class="participants">
+      <h3 class="participants__top">Communities</h3>
+      <div class="participants__list scroll">
+        {% for comm in communities %}
+        <a href="{%  url 'community_details' comm.id %}" class="participant">
+          <p>
+            {{comm.name}}
+          </p>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+      <!-- Activities End -->
+    </div>
+  </main>
+
+
+{% endblock %}

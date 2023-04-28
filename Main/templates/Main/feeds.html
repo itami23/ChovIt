@@ -1,0 +1,79 @@
+{% extends 'All/index.html' %}
+{% block content %}
+
+	<main class="layout layout--3">
+      <div class="container">
+        <!-- Rooms Start -->
+        <div class="topics">
+          
+        </div>
+        <!-- Rooms End -->
+
+        <!-- Room List Start -->
+        <div class="roomList">
+          <div class="mobile-menu">
+            <form class="header__search">
+              <label>
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                  <title>search</title>
+                  <path
+                    d="M32 30.586l-10.845-10.845c1.771-2.092 2.845-4.791 2.845-7.741 0-6.617-5.383-12-12-12s-12 5.383-12 12c0 6.617 5.383 12 12 12 2.949 0 5.649-1.074 7.741-2.845l10.845 10.845 1.414-1.414zM12 22c-5.514 0-10-4.486-10-10s4.486-10 10-10c5.514 0 10 4.486 10 10s-4.486 10-10 10z"
+                  ></path>
+                </svg>
+                <input placeholder="Search for Communities" />
+              </label>
+            </form>
+            <div class="mobile-menuItems">
+              <a class="btn btn--main btn--pill" href="#">Browse Topics</a>
+              <a class="btn btn--main btn--pill" href="#">Recent Activities</a>
+            </div>
+          </div>
+
+          {% for post in posts %}
+          <div class="roomListRoom">
+            <div class="roomListRoom__header">
+              <a href="{% url 'profile' post.user.id %}" class="roomListRoom__author">
+                <div class="avatar avatar--small">
+                  <img src="{{post.user.profile.image.url}}" />
+                </div>
+                <span>@{{post.user.username}}</span>
+              </a>
+              
+            </div>
+            <div class="roomListRoom__content">
+              {% if post.image %}
+              <img src="{{post.image.url}}" />
+              {% endif %}
+              <p>
+                {{post.body}}
+              </p>
+            </div>
+            <div class="roomListRoom__meta">
+              <p class="roomListRoom__joined">
+                {{post.created | timesince }}
+              </p>
+              
+            </div>
+          </div>
+          {% endfor %}
+          
+
+        </div>
+        <!-- Room List End -->
+
+        <!-- Activities Start -->
+        <div class="activities">
+          
+        </div>
+        <!-- Activities End -->
+      </div>
+    </main>
+    <div class="pagination">
+        {% if posts_list.has_previous %}
+        <a href="?page={{posts_list.previous_page_number}}">&laquo;</a>
+        {% elif posts_list.has_next %}
+        <a href="?page={{posts_list.next_page_number}}">&raquo;</a>
+        {% endif %}
+      </div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'All/index.html' %}
+
+{% block content %}
+
+    <main class="auth layout">
+      <div class="container">
+        <div class="layout__box">
+          <div class="layout__boxHeader">
+            <div class="layout__boxTitle">
+              <h3>Room Creation</h3>
+            </div>
+          </div>
+          <div class="layout__body">
+            <h2 class="auth__tagline">Create\Update A Room</h2>
+
+            <form class="form" method="POST" enctype="multipart/form-data" autocomplete="off">
+              {% csrf_token %}
+            	
+
+		            <div class="form__group form__group">
+		                <label for="room_name">Room Name</label>
+		                {{form.name}}
+		            </div>
+
+             <div class="form__group">
+              <label for="room_description">Room Description</label>
+              {{form.description}}
+            </div>
+
+
+            <div class="form__action">
+              <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}">Cancel</a>
+              <button class="btn btn--main" type="submit">Submit</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+{% endblock %}

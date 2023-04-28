@@ -1,0 +1,18 @@
+{% load crispy_forms_tags %}
+{% for message in messages %}
+  <div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <strong>{{message}}</strong> 
+  </div>
+  {% endfor %}
+
+<form method="POST" action="">
+	{% csrf_token %}
+	{% for field in form %}
+		{{field|as_crispy_field}}
+		{% for error in field.errors %}
+		<span>{{error}}</span>
+		{% endfor%}
+	{% endfor %}
+	<button type="submit">submit</button>
+</form>
